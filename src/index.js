@@ -3,12 +3,19 @@ const app = express();
 const bodyParser = require("body-parser");
 const { PORT } = require("./config/server-config");
 const connectDB = require("./config/database-config");
+const ProductRepository = require("./repository/productRepository");
 
+const productRepo = new ProductRepository();
 const server = async () => {
   app.use(bodyParser.json());
   await connectDB();
   app.listen(3002, () => {
     console.log(`Server started at port ${PORT}`);
+  });
+  productRepo.createProduct({
+    name: "french cake",
+    price: "100",
+    quantity: 10,
   });
 };
 

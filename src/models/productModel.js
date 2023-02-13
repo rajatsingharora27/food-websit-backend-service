@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const cakeSchema = new mongoose.Schema(
+const productSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -19,7 +19,7 @@ const cakeSchema = new mongoose.Schema(
     tags: {
       type: Array,
     },
-    quatity: {
+    quantity: {
       type: Number,
       required: true,
     },
@@ -30,4 +30,4 @@ const cakeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Cake", cakeSchema);
+module.exports = mongoose.model("Product", productSchema);
