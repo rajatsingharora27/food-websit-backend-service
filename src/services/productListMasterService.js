@@ -22,6 +22,22 @@ class ProductListService {
       );
     }
   }
+
+  async deleteProduct(productId) {
+    try {
+      const product = await this.productListMasterRepository.deleteProduct(
+        productId
+      );
+      return product;
+    } catch (error) {
+      logger.error(`${SERVICE_LAYER_ERROR} ${error}`);
+      throw new Repository(
+        `${SERVICE_LAYER_ERROR}`,
+        `${"error in service"}`,
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
 }
 
 module.exports = ProductListService;

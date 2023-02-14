@@ -25,6 +25,10 @@ class ProductRepository {
       );
     }
   }
+  async deleteProduct(productId) {
+    try {
+    } catch (error) {}
+  }
 }
 
 module.exports = ProductRepository;
