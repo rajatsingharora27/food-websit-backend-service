@@ -44,6 +44,35 @@ class ProductListMaster {
       );
     }
   }
+
+  async getSingleProdruct(productId) {
+    try {
+      const product = await productListSchema.findById(productId);
+      return product;
+    } catch (error) {
+      logger.error(`${REPOSITORY_LAYER_ERROR_MESSAGE} ${error}`);
+      throw new Repository(
+        `${REPOSITORY_LAYER_ERROR}`,
+        `${"error in service"}`,
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  async updateProduct(productId, updatedData) {
+    try {
+      const product = await productListSchema.findByIdAndUpdate(productId, {
+        name: updatedData,
+      });
+    } catch (error) {
+      logger.error(`${REPOSITORY_LAYER_ERROR_MESSAGE} ${error}`);
+      throw new Repository(
+        `${REPOSITORY_LAYER_ERROR}`,
+        `${"error in service"}`,
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
 }
 
 module.exports = ProductListMaster;
