@@ -2,6 +2,16 @@ const logger = require("../logger");
 const { ProductListMasterRepository } = require("../repository/index");
 const { SERVICE_LAYER_ERROR } = require("../messageUtils/message");
 
+/**
+ *  This service will be used for making the 
+ *  product List avialabe to the store 
+ *  for eg: store can have the following categories:
+        cake,
+        biscuits etc.
+ * 
+ * 
+ */
+
 class ProductListService {
   constructor() {
     this.productListMasterRepository = new ProductListMasterRepository();

@@ -26,6 +26,14 @@ const productSchema = new mongoose.Schema(
     speacialDay: {
       type: String,
     },
+    typeOfproduct: {
+      type: String,
+      required: true,
+    },
+    categoryId: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

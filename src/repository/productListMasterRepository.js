@@ -1,5 +1,5 @@
 const productListSchema = require("../models/productListMaster");
-const { REPOSITORY_LAYER_ERROR } = require("../messageUtils/message");
+const { REPOSITORY_LAYER_ERROR_MESSAGE } = require("../messageUtils/message");
 const { StatusCodes } = require("http-status-codes");
 
 class ProductListMaster {
@@ -72,6 +72,13 @@ class ProductListMaster {
         StatusCodes.INTERNAL_SERVER_ERROR
       );
     }
+  }
+
+  async findByName(productName) {
+    try {
+      const product = await productListSchema.findOne({ name: productName });
+      return product._id;
+    } catch (error) {}
   }
 }
 

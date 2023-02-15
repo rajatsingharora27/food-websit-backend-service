@@ -10,3 +10,11 @@ const REPOSITORY_LAYER_ERROR = "Repository error.";
 const SERVICE_LAYER_ERROR = "Service layer error.";
 
 //------------------------Critcal Error Message------------------------------------------
+
+module.exports = {
+  DATA_SAVED_SUCCESSFULLY_1,
+  REPOSITORY_LAYER_ERROR_MESSAGE,
+  DATA_NOT_STORED,
+  REPOSITORY_LAYER_ERROR,
+  SERVICE_LAYER_ERROR,
+};
