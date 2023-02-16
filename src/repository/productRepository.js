@@ -17,9 +17,11 @@ class ProductRepository {
 
   async createProduct(productData) {
     try {
+      //get the product ID from ProductListMasterRepository
       const productId = await this.productListRepo.findByName(
         productData.typeOfproduct
       );
+      //assiging the product ID to the new product
       productData = { ...productData, categoryId: productId };
 
       const newProduct = await productSchema.create(productData);
