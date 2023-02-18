@@ -6,6 +6,8 @@ const {
   REPOSITORY_LAYER_ERROR_MESSAGE,
   DATA_NOT_STORED,
   REPOSITORY_LAYER_ERROR,
+  DATA_NOT_UPDATED,
+  DATA_NOT_PRESENT,
 } = require("../messageUtils/message");
 const RepositoryError = require("../Error/repositoryError");
 const ProductListMaster = require("./productListMasterRepository");
@@ -41,14 +43,48 @@ class ProductRepository {
 
   async deleteProduct(productId) {
     try {
-    } catch (error) {}
+      const deletedData = await productSchema.findByIdAndDelete(productId);
+      return deletedData;
+    } catch (error) {
+      logger.info(`${REPOSITORY_LAYER_ERROR_MESSAGE}:${error}`);
+      throw new RepositoryError(
+        `${REPOSITORY_LAYER_ERROR}`,
+        `${DATA_NOT_PRESENT}`,
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   async findProduct(data) {
     try {
       const product = await productSchema.find(data);
       return product;
-    } catch (error) {}
+    } catch (error) {
+      logger.info(`${REPOSITORY_LAYER_ERROR_MESSAGE}:${error}`);
+      throw new RepositoryError(
+        `${REPOSITORY_LAYER_ERROR}`,
+        `${DATA_NOT_PRESENT}`,
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  async updateProduct(productId, productData) {
+    try {
+      const updateProduct = await productSchema.findByIdAndUpdate(
+        productId,
+        productData,
+        { new: true }
+      );
+      return updateProduct;
+    } catch (error) {
+      logger.info(`${REPOSITORY_LAYER_ERROR_MESSAGE}:${error}`);
+      throw new RepositoryError(
+        `${REPOSITORY_LAYER_ERROR}`,
+        `${DATA_NOT_UPDATED}`,
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 }
 

@@ -14,5 +14,6 @@ router.get("/login", loginController.loginUser);
 //----Create Product----
 
 router.post("/addProduct", upload, productController.createProduct);
+router.patch("/updateProduct", upload, productController.updateProduct);
 
 module.exports = router;

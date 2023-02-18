@@ -7,12 +7,13 @@ const ProductRepository = require("./repository/productRepository");
 const logger = require("./logger/index");
 const apiRoutes = require("./router/index");
 const { ProductListMasterRepository } = require("./repository");
-const productLisSchema = require("../src/models/productListMaster");
-const { LoginService } = require("./services/index");
+const { LoginService, ProductService } = require("./services/index");
 
+const productLisSchema = require("../src/models/productListMaster");
 const productRepo = new ProductRepository();
 const productList = new ProductListMasterRepository();
 const loginService = new LoginService();
+const productService = new ProductService();
 
 const server = async () => {
   app.use(bodyParser.json());
@@ -26,10 +27,10 @@ const server = async () => {
   //   name: "cake",
   // });
 
-  // productRepo.createProduct({
+  // productRepo.updateProduct({
   //   name: "pineapple cake",
   //   price: "100",
-  //   quantity: 5,
+  //   quantity: 10,
   //   typeOfproduct: "cake",
   // });
   // const res = await productRepo.findProduct({
@@ -43,6 +44,15 @@ const server = async () => {
   //   password: "Rajatsingh13",
   // });
   // console.log(user);
+
+  // const data = await productService.updateData({
+  //   name: "pineapple cake",
+  //   price: "100",
+  //   quantity: 5,
+  //   typeOfproduct: "cake",
+  // });
+
+  // console.log(data);
 };
 
 server();

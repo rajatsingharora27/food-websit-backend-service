@@ -22,6 +22,23 @@ class ProductController {
       });
     }
   };
+
+  updateProduct = async (req, res) => {
+    try {
+      const product = await this.productService.updateData(req.file, req.body);
+      res.status(StatusCodes.CREATED).json({
+        message: "Product Updated successfully",
+        data: product,
+        error: {},
+      });
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        message: error.name,
+        data: {},
+        error: error,
+      });
+    }
+  };
 }
 
 module.exports = ProductController;

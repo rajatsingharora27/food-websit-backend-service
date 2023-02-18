@@ -20,9 +20,24 @@ class ProductService {
     this.productRepository = new ProductRepository();
   }
 
+  #random(length = 8) {
+    // Declare all characters
+    let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+    // Pick characers randomly
+    let str = "";
+    for (let i = 0; i < length; i++) {
+      str += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    return str;
+  }
+
   #generateThumbnailImageUrl(productDataImage, productData) {
+    const str = this.#random(5);
     const res = cloudinary.uploader.upload(productDataImage.path, {
-      public_id: `${productData.name}`,
+      public_id: str,
+      filename_override: Date.now(),
     });
 
     res
@@ -35,7 +50,7 @@ class ProductService {
       });
 
     // Generate
-    return cloudinary.url(`${productData.name}`);
+    return cloudinary.url(str);
   }
 
   async create(productDataImage, productData) {
@@ -65,6 +80,36 @@ class ProductService {
       throw error;
     }
   }
+
+  async updateData(imageFile, data) {
+    try {
+      const productWithPrviousData = await this.productRepository.findProduct({
+        name: data.name,
+      });
+      if (imageFile !== undefined) {
+        const thumbnailImageUrl = this.#generateThumbnailImageUrl(
+          imageFile,
+          data
+        );
+        data = { ...data, thumbNailImage: thumbnailImageUrl };
+        // delete the previous image form cludinary
+        const url = productWithPrviousData.thumbNailImage;
+        await cloudinary.uploader.destroy(url, (response) => {
+          console.log("Data deleted from cloudinary ", response);
+        });
+      }
+
+      const product = await this.productRepository.updateProduct(
+        productId[0]._id,
+        data
+      );
+      return product;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async deleteProduct() {}
 }
 
 module.exports = ProductService;
