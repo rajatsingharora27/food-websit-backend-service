@@ -35,6 +35,10 @@ class ProductService {
 
   #generateThumbnailImageUrl(productDataImage, productData) {
     const str = this.#random(5);
+    if (productDataImage === undefined) {
+      return "";
+    }
+
     const res = cloudinary.uploader.upload(productDataImage.path, {
       public_id: str,
       filename_override: Date.now(),
@@ -57,7 +61,7 @@ class ProductService {
     try {
       // check if the product already exists
       //check if the product with same name already exists
-
+      let product;
       const isProductThere = await isProductAlredyCreated(productData);
       if (isProductThere) {
         logger.info("Product already exists");
@@ -67,14 +71,17 @@ class ProductService {
           StatusCodes.BAD_REQUEST
         );
       }
+
       const thumbnailImageUrl = this.#generateThumbnailImageUrl(
         productDataImage,
         productData
       );
-      const product = await this.productRepository.createProduct({
+
+      product = await this.productRepository.createProduct({
         ...productData,
         thumbNailImage: thumbnailImageUrl,
       });
+
       return product;
     } catch (error) {
       throw error;

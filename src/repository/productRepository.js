@@ -55,10 +55,24 @@ class ProductRepository {
     }
   }
 
-  async findProduct(data) {
+  async findProduct(productId) {
     try {
-      const product = await productSchema.find(data);
+      const product = await productSchema.find(productId);
       return product;
+    } catch (error) {
+      logger.info(`${REPOSITORY_LAYER_ERROR_MESSAGE}:${error}`);
+      throw new RepositoryError(
+        `${REPOSITORY_LAYER_ERROR}`,
+        `${DATA_NOT_PRESENT}`,
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  async findAllProducts() {
+    try {
+      const products = await productSchema.find();
+      return products;
     } catch (error) {
       logger.info(`${REPOSITORY_LAYER_ERROR_MESSAGE}:${error}`);
       throw new RepositoryError(

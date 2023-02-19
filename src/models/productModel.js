@@ -36,7 +36,24 @@ const productSchema = new mongoose.Schema(
     },
     thumbNailImage: {
       type: String,
-      required: true,
+    },
+    description: {
+      aboutProduct: {
+        type: String,
+        required: true,
+      },
+      ingrediants: {
+        type: String,
+        required: true,
+      },
+      allergens: {
+        type: String,
+        required: true,
+      },
+      storageAndConsumption: {
+        type: String,
+        required: true,
+      },
     },
   },
   { timestamps: true }
