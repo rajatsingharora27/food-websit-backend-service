@@ -52,6 +52,8 @@ const server = async () => {
   //   typeOfproduct: "cake",
   // });
 
+  // const data = await productService.deleteProduct("63edcf7b5472e5daef7bb890");
+
   // console.log(data);
 };
 

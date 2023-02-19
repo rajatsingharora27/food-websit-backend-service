@@ -15,5 +15,6 @@ router.get("/login", loginController.loginUser);
 
 router.post("/addProduct", upload, productController.createProduct);
 router.patch("/updateProduct", upload, productController.updateProduct);
+router.delete("/deleteProduct/:id", productController.deleteProduct);
 
 module.exports = router;

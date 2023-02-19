@@ -109,7 +109,14 @@ class ProductService {
     }
   }
 
-  async deleteProduct() {}
+  async deleteProduct(productId) {
+    try {
+      const product = await this.productRepository.deleteProduct(productId);
+      return product;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = ProductService;
