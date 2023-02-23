@@ -1,5 +1,5 @@
 const logger = require("../logger");
-const { ProductListMasterRepository } = require("../repository/index");
+const { ProductCategory } = require("../repository/index");
 const { SERVICE_LAYER_ERROR } = require("../messageUtils/message");
 
 /**
@@ -12,17 +12,25 @@ const { SERVICE_LAYER_ERROR } = require("../messageUtils/message");
  * 
  */
 
-class ProductListService {
+class ProductCategoryService {
   constructor() {
-    this.productListMasterRepository = new ProductListMasterRepository();
+    this.productCategory = new ProductCategory();
   }
 
-  async createProduct(data) {
+  async createCategory(data) {
     try {
-      const product = await this.productListMasterRepository.createProduct(
-        data
-      );
-      return product;
+      const category = await this.productCategory.createCategory(data);
+      return category;
+    } catch (error) {
+      logger.error(`${SERVICE_LAYER_ERROR} ${error}`);
+      throw error;
+    }
+  }
+
+  async getAllCategories() {
+    try {
+      const category = await this.productCategory.getAllCategory();
+      return category;
     } catch (error) {
       logger.error(`${SERVICE_LAYER_ERROR} ${error}`);
       throw new Repository(
@@ -32,13 +40,10 @@ class ProductListService {
       );
     }
   }
-
   async deleteProduct(productId) {
     try {
-      const product = await this.productListMasterRepository.deleteProduct(
-        productId
-      );
-      return product;
+      const category = await this.productCategory.deleteProduct(productId);
+      return category;
     } catch (error) {
       logger.error(`${SERVICE_LAYER_ERROR} ${error}`);
       throw new Repository(
@@ -49,5 +54,4 @@ class ProductListService {
     }
   }
 }
-
-module.exports = ProductListService;
+module.exports = ProductCategoryService;

@@ -1,25 +1,38 @@
-const productListSchema = require("../models/productListMaster");
+const productCategory = require("../models/productCategory");
 const { REPOSITORY_LAYER_ERROR_MESSAGE } = require("../messageUtils/message");
 const { StatusCodes } = require("http-status-codes");
+const logger = require("../logger");
+const RepositoryError = require("../Error/repositoryError");
 
-class ProductListMaster {
-  async createProduct(data) {
+class ProductCategory {
+  async createCategory(data) {
     try {
-      const product = await productListSchema.create(data);
-      return product;
+      const category = await productCategory.create(data);
+      return category;
     } catch (error) {
+      if (error.code === 11000) {
+        logger.error(
+          `${REPOSITORY_LAYER_ERROR_MESSAGE} ${`duplicate data value ${data.name}`}`
+        );
+        throw new RepositoryError(
+          `${REPOSITORY_LAYER_ERROR_MESSAGE}`,
+          `${`duplicate data value ${data.name}`}`,
+          StatusCodes.INTERNAL_SERVER_ERROR
+        );
+      }
       logger.error(`${REPOSITORY_LAYER_ERROR_MESSAGE} ${error}`);
-      throw new Repository(
-        `${REPOSITORY_LAYER_ERROR}`,
+
+      throw new RepositoryError(
+        `${REPOSITORY_LAYER_ERROR_MESSAGE}`,
         `${"error in service"}`,
         StatusCodes.INTERNAL_SERVER_ERROR
       );
     }
   }
 
-  async deleteProduct(productId) {
+  async deleteCategory(productId) {
     try {
-      const product = await productListSchema.findByIdAndDelete(productId);
+      const category = await productCategory.findByIdAndDelete(productId);
       return true;
     } catch (error) {
       logger.error(`${REPOSITORY_LAYER_ERROR_MESSAGE} ${error}`);
@@ -31,10 +44,10 @@ class ProductListMaster {
     }
   }
 
-  async getAllProducts() {
+  async getAllCategory() {
     try {
-      const products = await productListSchema.find({});
-      return products;
+      const category = await productCategory.find({});
+      return category;
     } catch (error) {
       logger.error(`${REPOSITORY_LAYER_ERROR_MESSAGE} ${error}`);
       throw new Repository(
@@ -45,10 +58,10 @@ class ProductListMaster {
     }
   }
 
-  async getSingleProdruct(productId) {
+  async getSingleCategory(productId) {
     try {
-      const product = await productListSchema.findById(productId);
-      return product;
+      const category = await productCategory.findById(productId);
+      return category;
     } catch (error) {
       logger.error(`${REPOSITORY_LAYER_ERROR_MESSAGE} ${error}`);
       throw new Repository(
@@ -59,9 +72,9 @@ class ProductListMaster {
     }
   }
 
-  async updateProduct(productId, updatedData) {
+  async updateCategory(productId, updatedData) {
     try {
-      const product = await productListSchema.findByIdAndUpdate(productId, {
+      const category = await productCategory.findByIdAndUpdate(productId, {
         name: updatedData,
       });
     } catch (error) {
@@ -76,10 +89,10 @@ class ProductListMaster {
 
   async findByName(productName) {
     try {
-      const product = await productListSchema.findOne({ name: productName });
-      return product._id;
+      const category = await productCategory.findOne({ name: productName });
+      return category._id;
     } catch (error) {}
   }
 }
 
-module.exports = ProductListMaster;
+module.exports = ProductCategory;

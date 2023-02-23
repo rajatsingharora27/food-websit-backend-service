@@ -6,16 +6,20 @@ const connectDB = require("./config/database-config");
 const ProductRepository = require("./repository/productRepository");
 const logger = require("./logger/index");
 const apiRoutes = require("./router/index");
+const cors = require("cors");
+
 const { ProductListMasterRepository } = require("./repository");
 const { LoginService, ProductService } = require("./services/index");
 
-const productLisSchema = require("../src/models/productListMaster");
+// const productLisSchema = require("../src/models/productListMaster");
 const productRepo = new ProductRepository();
-const productList = new ProductListMasterRepository();
+// const productList = new ProductListMasterRepository();
 const loginService = new LoginService();
 const productService = new ProductService();
 
 const server = async () => {
+  app.use(cors());
+
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use("/api", apiRoutes);

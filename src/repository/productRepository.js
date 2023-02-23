@@ -10,7 +10,7 @@ const {
   DATA_NOT_PRESENT,
 } = require("../messageUtils/message");
 const RepositoryError = require("../Error/repositoryError");
-const ProductListMaster = require("./productListMasterRepository");
+const ProductListMaster = require("./productCategoryRepository");
 
 class ProductRepository {
   constructor() {

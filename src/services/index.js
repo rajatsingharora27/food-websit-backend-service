@@ -1,5 +1,5 @@
 module.exports = {
-  ProductListMasterService: require("./productListMasterService"),
+  ProductCategoryService: require("./productCategoryService"),
   ProductService: require("./productService"),
   LoginService: require("./login"),
 };
