@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema(
     },
     quantity: {
       type: Number,
-      required: true,
+      // required: true,
     },
     speacialDay: {
       type: String,
@@ -40,19 +40,19 @@ const productSchema = new mongoose.Schema(
     description: {
       aboutProduct: {
         type: String,
-        required: true,
+        // required: true,
       },
       ingrediants: {
         type: String,
-        required: true,
+        // required: true,
       },
       allergens: {
         type: String,
-        required: true,
+        // required: true,
       },
       storageAndConsumption: {
         type: String,
-        required: true,
+        // required: true,
       },
     },
   },

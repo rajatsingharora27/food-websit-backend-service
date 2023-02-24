@@ -7,7 +7,7 @@ class ProductController {
 
   createProduct = async (req, res) => {
     try {
-      const product = await this.productService.create(req.file, req.body);
+      const product = await this.productService.create(req.body);
 
       res.status(StatusCodes.CREATED).json({
         message: "Product created successfully",
@@ -48,6 +48,23 @@ class ProductController {
       res.status(StatusCodes.OK).json({
         message: "Product Deleted successfully",
         data: product,
+        error: {},
+      });
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        message: error.name,
+        data: {},
+        error: error,
+      });
+    }
+  };
+  uploadImage = async (req, res) => {
+    try {
+      const image = await this.productService.uploadImage(req.file);
+
+      res.status(StatusCodes.CREATED).json({
+        message: "Image Uploaded successfully",
+        data: image,
         error: {},
       });
     } catch (error) {

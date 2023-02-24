@@ -57,7 +57,7 @@ class ProductService {
     return cloudinary.url(str);
   }
 
-  async create(productDataImage, productData) {
+  async create(productData) {
     try {
       // check if the product already exists
       //check if the product with same name already exists
@@ -72,15 +72,12 @@ class ProductService {
         );
       }
 
-      const thumbnailImageUrl = this.#generateThumbnailImageUrl(
-        productDataImage,
-        productData
-      );
+      // const thumbnailImageUrl = this.#generateThumbnailImageUrl(
+      //   productDataImage,
+      //   productData
+      // );
 
-      product = await this.productRepository.createProduct({
-        ...productData,
-        thumbNailImage: thumbnailImageUrl,
-      });
+      product = await this.productRepository.createProduct(productData);
 
       return product;
     } catch (error) {
@@ -123,6 +120,30 @@ class ProductService {
     } catch (error) {
       throw error;
     }
+  }
+
+  async uploadImage(productDataImage) {
+    const str = this.#random(5);
+    if (productDataImage === undefined) {
+      return "";
+    }
+
+    const res = cloudinary.uploader.upload(productDataImage.path, {
+      public_id: str,
+      filename_override: Date.now(),
+    });
+
+    res
+      .then((data) => {
+        console.log(data);
+        console.log(data.secure_url);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // Generate
+    return cloudinary.url(str);
   }
 }
 
