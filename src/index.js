@@ -2,20 +2,28 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const { PORT } = require("./config/server-config");
-const connectDB = require("./config/database-config");
+const { connectDB } = require("./config/database-config");
 const ProductRepository = require("./repository/productRepository");
 const logger = require("./logger/index");
 const apiRoutes = require("./router/index");
 const cors = require("cors");
+// const { OrderService } = require("./services/index");
 
 const { ProductListMasterRepository } = require("./repository");
-const { LoginService, ProductService } = require("./services/index");
+const {
+  LoginService,
+  ProductService,
+  OrderService,
+} = require("./services/index");
+const { default: mongoose } = require("mongoose");
 
 // const productLisSchema = require("../src/models/productListMaster");
 const productRepo = new ProductRepository();
 // const productList = new ProductListMasterRepository();
 const loginService = new LoginService();
 const productService = new ProductService();
+
+const orderService = new OrderService();
 
 const server = async () => {
   app.use(cors());
@@ -59,6 +67,26 @@ const server = async () => {
   // const data = await productService.deleteProduct("63edcf7b5472e5daef7bb890");
 
   // console.log(data);
+
+  // const orderSchema = new mongoose.Schema({});
+  // const Order = mongoose.model("Order", orderSchema, "orders");
+  // const result = await Order.findOne({ customerName: "rohit" });
+  // console.log(result);
+  // let filter = { customerName: "Fur Rajat" };
+  // let q = { customerName: "Rajat" };
+
+  // let coll = mongoose.connection.db.collection("orders");
+  // let data = await coll.findOneAndUpdate(
+  //   filter,
+  //   { $set: { customerName: "Rajat" } },
+  //   {
+  //     new: true,
+  //   }
+  // );
+
+  // console.log(data);
+  // const ans = await orderService.findAllOrders();
+  // console.log(ans);
 };
 
 server();

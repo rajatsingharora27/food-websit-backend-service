@@ -26,7 +26,6 @@ class ProductCategoryService {
       throw error;
     }
   }
-
   async getAllCategories() {
     try {
       const category = await this.productCategory.getAllCategory();
@@ -53,5 +52,6 @@ class ProductCategoryService {
       );
     }
   }
+  async filterProduct(productFilter) {}
 }
 module.exports = ProductCategoryService;

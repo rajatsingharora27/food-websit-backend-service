@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const connectDB = async () => {
+  mongoose.set("strictQuery", false);
   await mongoose
     .connect("mongodb://127.0.0.1:27017/Tuileries-dev", {
       useNewUrlParser: true,
@@ -13,4 +14,9 @@ const connectDB = async () => {
     .catch((err) => console.log(`Error connecting to database: ${err}`));
 };
 
-module.exports = connectDB;
+const orderCollection = () => {
+  let coll = mongoose.connection.db.collection("orders");
+  return coll;
+};
+
+module.exports = { connectDB, orderCollection };

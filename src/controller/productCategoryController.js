@@ -1,5 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const { ProductCategoryService } = require("../services/index");
+const productCategory = require("../models/productCategory");
 class ProductController {
   constructor() {
     this.productCategory = new ProductCategoryService();
@@ -30,6 +31,30 @@ class ProductController {
       res.status(StatusCodes.CREATED).json({
         message: "Product created successfully",
         data: category,
+        error: {},
+      });
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        message: error.name,
+        data: {},
+        error: error,
+      });
+    }
+  };
+
+  filterCriteria = async (req, res) => {
+    try {
+      console.log(req.query);
+      const categoryNames = req.query.name;
+      console.log(categoryNames);
+
+      const result = await productCategory.find({
+        name: { $in: categoryNames },
+      });
+
+      res.status(StatusCodes.CREATED).json({
+        message: "List of selected category",
+        data: result,
         error: {},
       });
     } catch (error) {

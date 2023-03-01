@@ -11,12 +11,14 @@ class ProductController {
 
       res.status(StatusCodes.CREATED).json({
         message: "Product created successfully",
+        statusCode: StatusCodes.CREATED,
         data: product,
         error: {},
       });
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         message: error.name,
+        statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
         data: {},
         error: error,
       });
