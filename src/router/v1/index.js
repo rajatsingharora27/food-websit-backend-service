@@ -31,5 +31,6 @@ router.get("/filterCategory", productCategoryController.filterCriteria);
 //----- Orders-----
 
 router.get("/orders", orderController.getAllOrders);
+router.get("/filter-orders", orderController.filterOrder);
 
 module.exports = router;

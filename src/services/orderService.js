@@ -37,8 +37,21 @@ class OrderService {
   };
 
   filterRecords = async (req) => {
+    const oc = orderCollection();
     try {
-    } catch (error) {}
+      const records = await oc
+        .find({
+          $or: [
+            { status: { $in: req?.query?.status } },
+            { delevirySolt: req?.query?.delevirySolt },
+            { name: { $regex: ".*" + req?.query?.name + ".*", $options: "i" } },
+          ],
+        })
+        .toArray();
+      return records;
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 
