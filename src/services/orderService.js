@@ -8,7 +8,7 @@ class OrderService {
     const oc = orderCollection();
     try {
       const page = Number(req?.query?.page) || 1;
-      const limit = Number(req?.query?.limit) || 5;
+      const limit = Number(req?.query?.limit) || 3;
       const start = (page - 1) * limit;
       const end = page * limit;
       let results = {};
@@ -25,8 +25,10 @@ class OrderService {
           limit: limit,
         };
       }
-      orders.push(results);
-      return orders;
+
+      // orders.push(results);
+
+      return [{ pageInfo: results, orders: orders }];
     } catch (err) {
       throw new RepositoryError(
         "Repository Error",
