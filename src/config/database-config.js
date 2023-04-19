@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const logger = require("../logger");
 
 const connectDB = async () => {
   mongoose.set("strictQuery", false);
@@ -8,10 +9,10 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     })
     .then(() => {
-      console.log("Database connected");
+      logger.info("Database connected");
     })
 
-    .catch((err) => console.log(`Error connecting to database: ${err}`));
+    .catch((err) => logger.error(`Error connecting to database: ${err}`));
 };
 
 const orderCollection = () => {

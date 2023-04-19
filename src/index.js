@@ -7,6 +7,9 @@ const ProductRepository = require("./repository/productRepository");
 const logger = require("./logger/index");
 const apiRoutes = require("./router/index");
 const cors = require("cors");
+const Client = require("twilio");
+// const client = require('twilio')(accountSid, authToken);
+
 // const { OrderService } = require("./services/index");
 
 const { ProductListMasterRepository } = require("./repository");
@@ -87,6 +90,19 @@ const server = async () => {
   // console.log(data);
   // const ans = await orderService.findAllOrders();
   // console.log(ans);
+
+  // const accountSid = "ACca09c6c2ce48aff4095164da5a896eb3";
+  // const authToken = "1cf6adaf2e3b6f11c4c7c83232826244";
+  // const client = new Client(accountSid, authToken);
+
+  // client.messages
+  //   .create({
+  //     body: "Test ----- Your Yummy Cupcakes Company order of 1 dozen frosted cupcakes has shipped and should be delivered on July 10, 2019. Details: http://www.yummycupcakes.com/",
+  //     from: "whatsapp:+14155238886",
+  //     to: "whatsapp:+919078802386",
+  //   })
+  //   .then((message) => console.log("Message sent: ", message.sid))
+  //   .catch((error) => console.log(error));
 };
 
 server();

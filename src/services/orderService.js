@@ -8,7 +8,7 @@ class OrderService {
     const oc = orderCollection();
     try {
       const page = Number(req?.query?.page) || 1;
-      const limit = Number(req?.query?.limit) || 3;
+      const limit = Number(req?.query?.limit) || 5;
       const start = (page - 1) * limit;
       const end = page * limit;
       let results = {};
@@ -44,9 +44,14 @@ class OrderService {
       const records = await oc
         .find({
           $or: [
-            { status: { $in: req?.query?.status } },
+            { status: req?.query?.status },
             { delevirySolt: req?.query?.delevirySolt },
-            { name: { $regex: ".*" + req?.query?.name + ".*", $options: "i" } },
+            {
+              customerName: {
+                $regex: ".*" + req?.query?.customerName + ".*",
+                $options: "i",
+              },
+            },
           ],
         })
         .toArray();
